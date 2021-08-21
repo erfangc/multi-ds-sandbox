@@ -23,7 +23,7 @@ import javax.sql.DataSource
 )
 class PostgresDataSourceConfiguration {
 
-    @Bean
+    @Bean(name = ["postgresDataSource"])
     fun postgresDataSource(): DataSource {
         return HikariDataSource().apply {
             jdbcUrl = "jdbc:postgresql://localhost:5432/postgres"
@@ -33,14 +33,14 @@ class PostgresDataSourceConfiguration {
         }
     }
 
-    @Bean
+    @Bean(name = ["postgresEntityManagerFactory"])
     fun postgresEntityManagerFactory(
         postgresEntityManagerFactoryBuilder: EntityManagerFactoryBuilder,
         @Qualifier("postgresDataSource") postgresDataSource: DataSource
     ): LocalContainerEntityManagerFactoryBean {
         val postgresJpaProperties: MutableMap<String, String?> = HashMap()
         postgresJpaProperties["hibernate.dialect"] = "org.hibernate.dialect.PostgreSQLDialect"
-        postgresJpaProperties["hibernate.hbm2ddl.auto"] = "create-drop"
+        postgresJpaProperties["hibernate.hbm2ddl.auto"] = "update"
         return postgresEntityManagerFactoryBuilder
             .dataSource(postgresDataSource)
             .packages("com.example.multidssandbox.postgres")
@@ -51,7 +51,7 @@ class PostgresDataSourceConfiguration {
 
     @Bean
     fun postgresTransactionManager(
-        postgresEntityManagerFactory: EntityManagerFactory
+        @Qualifier("postgresEntityManagerFactory") postgresEntityManagerFactory: EntityManagerFactory
     ): PlatformTransactionManager {
         return JpaTransactionManager(postgresEntityManagerFactory)
     }

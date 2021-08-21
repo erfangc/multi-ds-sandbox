@@ -1,6 +1,7 @@
 package com.example.multidssandbox.mysql
 
 import com.zaxxer.hikari.HikariDataSource
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder
 import org.springframework.context.annotation.Bean
@@ -42,11 +43,11 @@ class MySqlDataSourceConfiguration {
     @Bean
     fun mysqlEntityManagerFactory(
         mysqlEntityManagerFactoryBuilder: EntityManagerFactoryBuilder,
-        mysqlDataSource: DataSource
+        @Qualifier("mysqlDataSource") mysqlDataSource: DataSource
     ): LocalContainerEntityManagerFactoryBean {
         val mysqlJpaProperties: MutableMap<String, String?> = HashMap()
         mysqlJpaProperties["hibernate.dialect"] = "org.hibernate.dialect.MySQL5Dialect"
-        mysqlJpaProperties["hibernate.hbm2ddl.auto"] = "create-drop"
+        mysqlJpaProperties["hibernate.hbm2ddl.auto"] = "update"
         return mysqlEntityManagerFactoryBuilder
             .dataSource(mysqlDataSource)
             .packages("com.example.multidssandbox.mysql")
