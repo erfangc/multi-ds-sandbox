@@ -1,12 +1,16 @@
 package com.example.multidssandbox.mysql.models
 
 import java.time.Instant
-import javax.persistence.*
+import java.util.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Id
 
 @Entity
 class Person(
     @Id
-    val id: Int,
+    @Column(length = 36)
+    var id: String = UUID.randomUUID().toString(),
     @Column(nullable = false)
     val name: String,
     @Column

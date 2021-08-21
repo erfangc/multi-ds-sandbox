@@ -6,9 +6,10 @@ import javax.persistence.*
 @Entity
 class Counter(
     @Id
+    @Column(length = 32)
     val name: String,
     @Column
-    val count: Int,
+    var count: Int = 0,
     @Column
-    val lastUpdated: Instant = Instant.now(),
+    var lastUpdated: Instant = Instant.now(),
 )

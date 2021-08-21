@@ -12,11 +12,14 @@ class PersonService(
     private val counterRepository: CounterRepository,
 ) {
     @Transactional
-    fun createPerson() {
-        personRepository.save(Person(id = 0, name = "John", age = 12))
+    fun createPerson(): Person {
+        val person = personRepository.save(Person(name = "John", age = 12))
         val counter = counterRepository.findByIdOrNull("people")
         if (counter == null) {
             counterRepository.save(Counter(name = "people", count = 1))
+        } else {
+            counterRepository.save(counter.apply { count += 1 })
         }
+        return person
     }
 }

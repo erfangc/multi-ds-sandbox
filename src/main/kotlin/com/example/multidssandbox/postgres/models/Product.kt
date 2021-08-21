@@ -1,16 +1,19 @@
 package com.example.multidssandbox.postgres.models
 
 import java.time.Instant
-import javax.persistence.*
+import java.util.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Id
 
 @Entity
 class Product(
     @Id
-    val id: Int,
+    val id: String = UUID.randomUUID().toString(),
     @Column(nullable = false)
-    val name: String,
+    var name: String,
     @Column(nullable = true)
-    val description: String? = null,
+    var description: String? = null,
     @Column
-    val lastUpdated: Instant = Instant.now(),
+    var lastUpdated: Instant = Instant.now(),
 )
