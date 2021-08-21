@@ -2,8 +2,6 @@ package com.example.multidssandbox.postgres
 
 import com.zaxxer.hikari.HikariDataSource
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
-import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -24,24 +22,21 @@ import javax.sql.DataSource
     basePackages = ["com.example.multidssandbox.postgres"]
 )
 class PostgresDataSourceConfiguration {
+
     @Bean
     fun postgresDataSource(): DataSource {
-        val dataSourceProperties = DataSourceProperties().apply {
-            url = "jdbc:postgresql://localhost:5432/postgres"
+        return HikariDataSource().apply {
+            jdbcUrl = "jdbc:postgresql://localhost:5432/postgres"
             username = "postgres"
             password = "mysecretpassword"
             driverClassName = "org.postgresql.Driver"
         }
-        return dataSourceProperties
-            .initializeDataSourceBuilder()
-            .type(HikariDataSource::class.java)
-            .build()
     }
 
     @Bean
     fun postgresEntityManagerFactory(
         postgresEntityManagerFactoryBuilder: EntityManagerFactoryBuilder,
-        @Qualifier("postgresDataSource") postgresDataSource: DataSource?
+        @Qualifier("postgresDataSource") postgresDataSource: DataSource
     ): LocalContainerEntityManagerFactoryBean {
         val postgresJpaProperties: MutableMap<String, String?> = HashMap()
         postgresJpaProperties["hibernate.dialect"] = "org.hibernate.dialect.PostgreSQLDialect"
@@ -56,8 +51,9 @@ class PostgresDataSourceConfiguration {
 
     @Bean
     fun postgresTransactionManager(
-        @Qualifier("postgresEntityManagerFactory") postgresEntityManagerFactory: EntityManagerFactory?
+        postgresEntityManagerFactory: EntityManagerFactory
     ): PlatformTransactionManager {
-        return JpaTransactionManager(postgresEntityManagerFactory!!)
+        return JpaTransactionManager(postgresEntityManagerFactory)
     }
+
 }

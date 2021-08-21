@@ -1,4 +1,4 @@
-package com.example.multidssandbox.mysql
+package com.example.multidssandbox.mysql.repositories
 
 import com.example.multidssandbox.mysql.models.Counter
 import org.springframework.data.jpa.repository.JpaRepository

@@ -1,7 +1,6 @@
 package com.example.multidssandbox.mysql
 
 import com.zaxxer.hikari.HikariDataSource
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder
 import org.springframework.context.annotation.Bean
@@ -14,7 +13,6 @@ import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.transaction.annotation.EnableTransactionManagement
 import javax.persistence.EntityManagerFactory
 import javax.sql.DataSource
-
 
 @Configuration
 @EnableTransactionManagement
@@ -59,10 +57,8 @@ class MySqlDataSourceConfiguration {
 
     @Primary
     @Bean
-    fun mysqlTransactionManager(
-        @Qualifier("mysqlEntityManagerFactory") mysqlEntityManagerFactory: EntityManagerFactory?
-    ): PlatformTransactionManager {
-        return JpaTransactionManager(mysqlEntityManagerFactory!!)
+    fun mysqlTransactionManager(mysqlEntityManagerFactory: EntityManagerFactory): PlatformTransactionManager {
+        return JpaTransactionManager(mysqlEntityManagerFactory)
     }
 
 }

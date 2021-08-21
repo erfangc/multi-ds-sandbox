@@ -2,6 +2,8 @@ package com.example.multidssandbox.mysql
 
 import com.example.multidssandbox.mysql.models.Counter
 import com.example.multidssandbox.mysql.models.Person
+import com.example.multidssandbox.mysql.repositories.CounterRepository
+import com.example.multidssandbox.mysql.repositories.PersonRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import javax.transaction.Transactional

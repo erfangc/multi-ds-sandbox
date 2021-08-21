@@ -1,5 +1,7 @@
 package com.example.multidssandbox.mysql
 
+import com.example.multidssandbox.mysql.repositories.CounterRepository
+import com.example.multidssandbox.mysql.repositories.PersonRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

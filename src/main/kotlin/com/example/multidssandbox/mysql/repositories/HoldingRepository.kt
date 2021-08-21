@@ -1,4 +1,4 @@
-package com.example.multidssandbox.mysql
+package com.example.multidssandbox.mysql.repositories
 
 import com.example.multidssandbox.mysql.models.Holding
 import com.example.multidssandbox.mysql.models.HoldingId

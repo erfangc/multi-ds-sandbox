@@ -1,8 +1,8 @@
 package com.example.multidssandbox
 
-import com.example.multidssandbox.mysql.HoldingRepository
+import com.example.multidssandbox.mysql.repositories.HoldingRepository
 import com.example.multidssandbox.mysql.models.Holding
-import com.example.multidssandbox.postgres.ProductRepository
+import com.example.multidssandbox.postgres.repositories.ProductRepository
 import com.example.multidssandbox.postgres.models.Product
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication

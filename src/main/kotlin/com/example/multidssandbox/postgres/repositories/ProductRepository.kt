@@ -1,4 +1,4 @@
-package com.example.multidssandbox.postgres
+package com.example.multidssandbox.postgres.repositories
 
 import com.example.multidssandbox.postgres.models.Product
 import org.springframework.data.jpa.repository.JpaRepository
