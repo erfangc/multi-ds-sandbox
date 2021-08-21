@@ -24,17 +24,18 @@ import javax.sql.DataSource
     basePackages = ["com.example.multidssandbox.postgres"]
 )
 class PostgresDataSourceConfiguration {
-
     @Bean
-    @ConfigurationProperties("spring.datasource-postgres")
-    fun postgresDataSourceProperties(): DataSourceProperties {
-        return DataSourceProperties()
-    }
-
-    @Bean
-    @ConfigurationProperties("spring.datasource-postgres.configuration")
-    fun postgresDataSource(@Qualifier("postgresDataSourceProperties") postgresDataSourceProperties: DataSourceProperties): DataSource {
-        return postgresDataSourceProperties.initializeDataSourceBuilder().type(HikariDataSource::class.java).build()
+    fun postgresDataSource(): DataSource {
+        val dataSourceProperties = DataSourceProperties().apply {
+            url = "jdbc:postgresql://localhost:5432/postgres"
+            username = "postgres"
+            password = "mysecretpassword"
+            driverClassName = "org.postgresql.Driver"
+        }
+        return dataSourceProperties
+            .initializeDataSourceBuilder()
+            .type(HikariDataSource::class.java)
+            .build()
     }
 
     @Bean

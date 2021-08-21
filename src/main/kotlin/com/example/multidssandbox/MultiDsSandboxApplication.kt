@@ -13,13 +13,18 @@ import org.springframework.context.annotation.Bean
 class MultiDsSandboxApplication {
     @Bean
     fun commandLineRunner(
-        holdingRepository: HoldingRepository
+        holdingRepository: HoldingRepository,
+        productRepository: ProductRepository,
     ): CommandLineRunner {
         return CommandLineRunner {
             val holding = holdingRepository.save(
                 Holding(accountId = "ACC1", assetId = "ASSET1", quantity = 100)
             )
             holdingRepository.save(holding.apply { quantity = quantity?.plus(150) })
+
+            // ---
+
+            productRepository.save(Product(name = "TV", description = "Best TV"))
         }
     }
 }

@@ -3,7 +3,6 @@ package com.example.multidssandbox.mysql
 import com.zaxxer.hikari.HikariDataSource
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
-import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -28,23 +27,24 @@ class MySqlDataSourceConfiguration {
 
     @Primary
     @Bean
-    @ConfigurationProperties("spring.datasource-mysql")
-    fun mysqlDataSourceProperties(): DataSourceProperties {
-        return DataSourceProperties()
-    }
-
-    @Primary
-    @Bean
-    @ConfigurationProperties("spring.datasource-mysql.configuration")
-    fun mysqlDataSource(@Qualifier("mysqlDataSourceProperties") mysqlDataSourceProperties: DataSourceProperties): DataSource {
-        return mysqlDataSourceProperties.initializeDataSourceBuilder().type(HikariDataSource::class.java).build()
+    fun mysqlDataSource(): DataSource {
+        val dataSourceProperties = DataSourceProperties().apply {
+            url = "jdbc:mysql://localhost:3306/primarydb"
+            username = "root"
+            password = "my-secret-pw"
+            driverClassName = "com.mysql.cj.jdbc.Driver"
+        }
+        return dataSourceProperties
+            .initializeDataSourceBuilder()
+            .type(HikariDataSource::class.java)
+            .build()
     }
 
     @Primary
     @Bean
     fun mysqlEntityManagerFactory(
         mysqlEntityManagerFactoryBuilder: EntityManagerFactoryBuilder,
-        @Qualifier("mysqlDataSource") mysqlDataSource: DataSource?
+        mysqlDataSource: DataSource
     ): LocalContainerEntityManagerFactoryBean {
         val mysqlJpaProperties: MutableMap<String, String?> = HashMap()
         mysqlJpaProperties["hibernate.dialect"] = "org.hibernate.dialect.MySQL5Dialect"
