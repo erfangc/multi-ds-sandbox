@@ -27,7 +27,7 @@ class PersonServiceTest {
 
         }
 
-        val person = personRepository.getById(0)
-        assertEquals("John", person.name)
+        val people = personRepository.findAll()
+        assertEquals("John", people.first().name)
     }
 }

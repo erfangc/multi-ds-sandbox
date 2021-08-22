@@ -8,6 +8,13 @@ class HoldingId : Serializable {
 
     lateinit var assetId: String
 
+    constructor(accountId: String, assetId: String) {
+        this.accountId = accountId
+        this.assetId = assetId
+    }
+
+    constructor()
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
