@@ -1,4 +1,4 @@
-package com.example.multidssandbox.mssql
+package com.example.multidssandbox.mssql.repositories
 
 import com.example.multidssandbox.mssql.models.Account
 import org.springframework.data.jpa.repository.JpaRepository

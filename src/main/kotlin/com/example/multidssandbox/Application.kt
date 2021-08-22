@@ -1,6 +1,6 @@
 package com.example.multidssandbox
 
-import com.example.multidssandbox.mssql.AccountRepository
+import com.example.multidssandbox.mssql.repositories.AccountRepository
 import com.example.multidssandbox.mssql.models.Account
 import com.example.multidssandbox.mysql.PersonService
 import com.example.multidssandbox.mysql.models.Person
